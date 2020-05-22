@@ -1,0 +1,2 @@
+# AutoSmoogle
+ Smoogle Assistive Solution
