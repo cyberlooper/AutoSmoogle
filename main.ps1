@@ -45,6 +45,7 @@ if ($ans -eq "Y") {
    else {
       createcsv
       if ((Read-Host -Prompt "`nDo you want to export this circuit to file? [Y/N]") -eq "Y") {exportcsv}
+      $
    }
 }
 else {
@@ -56,5 +57,5 @@ if (!($true -eq $Global:channelsformatted)) {
 }
 
 if (!($true -eq $global:CSVCreated)) {
-   
+   createcsv
 }
