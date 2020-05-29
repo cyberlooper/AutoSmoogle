@@ -60,3 +60,8 @@ if (!($true -eq $Global:channelsformatted)) {
 if (!($true -eq $global:CSVCreated)) {
 	createcsv
 }
+
+if (($Global:channelsformatted -eq $true) & ($global:CSVCreated -e $true))
+{
+   #autoall and Link
+}
