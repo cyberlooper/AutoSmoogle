@@ -16,5 +16,8 @@ function exportcsv {
     $name = read-host -Prompt "`n`tPlease give your file a name"
 
     $exportloc = "$global:location\exports"
-    $global:csvout > "$exportloc\$name"
+    if (!(test-path $exportloc)) {
+        New-Item -Path $exportloc -Force -ItemType directory
+    }
+    $global:csvout > "$exportloc\$name.csv"
 }
