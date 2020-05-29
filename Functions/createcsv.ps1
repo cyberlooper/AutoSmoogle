@@ -15,5 +15,5 @@ function createcsv {
         $counted++
         $channame = read-host -Prompt "`[$counted`] Please enter the channel name and language separated by a comma (channel-en,en)"
         $global:csvout += "$channame`n"
-    } break
+    }
 }

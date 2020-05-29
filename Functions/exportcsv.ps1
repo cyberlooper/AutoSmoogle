@@ -16,5 +16,5 @@ function exportcsv {
     $name = read-host -Prompt "`n`tPlease give your file a name"
 
     $exportloc = "$global:location\exports"
-    
+    $global:csvout > "$exportloc\$name"
 }

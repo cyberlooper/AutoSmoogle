@@ -1,4 +1,4 @@
-$host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160,5000)
+$host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(160, 5000)
 <###############################################################################################################
 Smoogle Support - Assisted Setup script
 
@@ -17,11 +17,12 @@ $ScriptDirectory = Get-Location
 $ScriptDirectory = "$ScriptDirectory\Functions"
 $functions = Get-ChildItem "$ScriptDirectory"
 foreach ($function in $functions) {
-   . (Join-Path $ScriptDirectory "$function")
+	. (Join-Path $ScriptDirectory "$function")
 }
 
 ## Global Variables
 $global:location = Get-Location
+$global:csvout
 $global:CSVCreated = ""
 $Global:channelsformatted = ""
 $global:dataloc = ""
@@ -37,25 +38,25 @@ Clear-Host
 
 $ans = Read-Host -Prompt "`nHave you setup a circuit before? (this will skip channel formatting) [Y/N]"
 if ($ans -eq "Y") {
-   $Global:channelsformatted = $true
-   $ans = Read-Host -Prompt "`nWould you like to provide your own CSV ? [Y/N]"
-   if ($ans -eq "Y") {
-      $global:dataloc = Read-Host -Prompt "Please enter the full location"
-   }
-   else {
-      createcsv
-      if ((Read-Host -Prompt "`nDo you want to export this circuit to file? [Y/N]") -eq "Y") {exportcsv}
-      $
-   }
+	$Global:channelsformatted = $true
+	$ans = Read-Host -Prompt "`nWould you like to provide your own CSV ? [Y/N]"
+	if ($ans -eq "Y") {
+		$global:dataloc = Read-Host -Prompt "Please enter the full location"
+	}
+	else {
+		createcsv
+		if ((Read-Host -Prompt "`nDo you want to export this circuit to file? [Y/N]") -eq "Y") { exportcsv }
+		$
+	}
 }
 else {
-   #Continue
+	#Continue
 }
 
 if (!($true -eq $Global:channelsformatted)) {
-   # Information on Channel Formatting
+	# Information on Channel Formatting
 }
 
 if (!($true -eq $global:CSVCreated)) {
-   createcsv
+	createcsv
 }
