@@ -23,10 +23,13 @@ foreach ($function in $functions) {
 
 ## Global Variables
 $global:location = Get-Location
-$global:csvout
+$global:csvout = ""
 $global:CSVCreated = ""
 $Global:channelsformatted = ""
 $global:dataloc = ""
+$global:finisheddata = ""
+$global:autoalldone = ""
+$global:linkdone = ""
 ## Start ##
 
 Write-Host "`n`t Welcome to AutoSmoogle, A tool for Translation Circuits." -ForegroundColor Magenta
@@ -37,17 +40,17 @@ Write-Host "`t the opportunity to skip sections if you prefer." -ForegroundColor
 Read-Host -Prompt "`n`t Press any key to continue" 
 Clear-Host
 
-$ans = Read-Host -Prompt "`nHave you setup a circuit before? (this will skip channel formatting) [Y/N]"
+$ans = Read-Host -Prompt "`n`tHave you setup a circuit before? (this will skip channel formatting) [Y/N]"
 if ($ans -eq "Y") {
 	$Global:channelsformatted = $true
-	$ans = Read-Host -Prompt "`nWould you like to provide your own CSV ? [Y/N]"
+	$ans = Read-Host -Prompt "`n`tWould you like to provide your own CSV ? [Y/N]"
 	if ($ans -eq "Y") {
-		$global:dataloc = Read-Host -Prompt "Please enter the full location"
-		import-csv $dataloc
+		$global:dataloc = Read-Host -Prompt "`n`tPlease enter the full location"
+		$csvout = import-csv $dataloc
 	}
 	else {
 		createcsv
-		if ((Read-Host -Prompt "`nDo you want to export this circuit to file? [Y/N]") -eq "Y") { exportcsv }
+		if ((Read-Host -Prompt "`n`tDo you want to export this circuit to file? [Y/N]") -eq "Y") { exportcsv }
 		$global:CSVCreated = $true
 	}
 }
@@ -82,5 +85,20 @@ if (!($true -eq $global:CSVCreated)) {
 }
 
 if (($Global:channelsformatted -eq $true) -and ($global:CSVCreated -eq $true)) {
-	#autoall and Link
+	if (!($true -eq $global:autoalldone)) {
+		autoall
+	}
+	if (!($true -eq $global:linkdone)) {
+		link
+	}
+}
+
+#exporting file
+$global:csvout > "$exportloc\CompleteCircuit.txt"
+
+if (test-path $exportloc) {
+	Clear-Host
+	write-host "`n`t Congradulations. If you check $exportloc, you will find your completed file." -ForegroundColor Green
+	write-host "`n`tNow comes the hard part. You have to copy and paste each command, into discord." -ForegroundColor Yellow
+	Write-host "`n`tGood Luck, and visit us on the support server if you run into any isues." -ForegroundColor Green
 }

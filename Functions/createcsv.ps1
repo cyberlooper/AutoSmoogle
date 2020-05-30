@@ -8,7 +8,7 @@ Written By -Z3US- - Smoogle Support
 All Code provided as is and used at your own risk.
 ###############################################################################################################>
 function createcsv {
-    $count = read-host -Prompt "`n`tHow many channels in the circuit?"
+    $count = read-host -Prompt "`n`t How many channels in the circuit?"
     $counted = 0
     $global:csvout = "channel,lang`n"
     while (!($count -eq $counted)) {
