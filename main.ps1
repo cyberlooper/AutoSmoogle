@@ -9,7 +9,7 @@ Written By -Z3US- - Smoogle Support
 All Code provided as is and used at your own risk.
 ###############################################################################################################>
 
-##Requires -version 5.1
+#Requires -version 5.1
 ##Requires -RunAsAdministrator
 
 # Inclusions
@@ -23,7 +23,9 @@ foreach ($function in $functions) {
 
 ## Global Variables
 $global:location = Get-Location
+$global:name = ""
 $global:csvout = ""
+$global:CSVProvided = ""
 $global:CSVCreated = ""
 $Global:channelsformatted = ""
 $global:dataloc = ""
@@ -47,16 +49,23 @@ if ($ans -eq "Y") {
 	if ($ans -eq "Y") {
 		$global:dataloc = Read-Host -Prompt "`n`tPlease enter the full location"
 		$csvout = import-csv $dataloc
+		$global:CSVProvided = $true
 	}
 	else {
 		createcsv
-		if ((Read-Host -Prompt "`n`tDo you want to export this circuit to file? [Y/N]") -eq "Y") { exportcsv }
+		if ((Read-Host -Prompt "`n`tDo you want to export this circuit to file? [Y/N]") -eq "Y") {
+			exportcsv
+			$csvout = import-csv "$exportloc\$name.csv"
+		}
 		$global:CSVCreated = $true
+		#$global:csvout > "c:\temp.csv"
+		#Export-Csv -path "c:\temp.csv" -InputObject $global:csvout -NoClobber
+		Out-File -FilePath "c:\temp.csv" -InputObject $csvout
+		$csvout = import-csv "c:\temp.csv"
+		Remove-Item -Force "c:\temp.csv"
 	}
 }
-else {
-	#Continue
-}
+
 
 if (!($true -eq $Global:channelsformatted)) {
 	# Information on Channel Formatting
@@ -80,11 +89,14 @@ if (!($true -eq $Global:channelsformatted)) {
 	write-host "`n`t Ok next we need to tell this system what channels you have."
 }
 
-if (!($true -eq $global:CSVCreated)) {
-	createcsv
+if (($true -eq $CSVCreated) -or ($true -eq $CSVProvided)) {
+	#continue
+}
+Else { 
+	createcsv 
 }
 
-if (($Global:channelsformatted -eq $true) -and ($global:CSVCreated -eq $true)) {
+if (($Global:channelsformatted -eq $true) -and (($global:CSVCreated -eq $true) -or ($global:CSVProvided -eq $true))) {
 	if (!($true -eq $global:autoalldone)) {
 		autoall
 	}
@@ -94,9 +106,11 @@ if (($Global:channelsformatted -eq $true) -and ($global:CSVCreated -eq $true)) {
 }
 
 #exporting file
-$global:csvout > "$exportloc\CompleteCircuit.txt"
+$savedata = $location
+#$global:finisheddata > "$savedata\CompleteCircuit.txt" -noclobber
+Out-File -FilePath $savedata\CompleteCircuit.txt -InputObject $global:finisheddata -Force
 
-if (test-path $exportloc) {
+if (test-path $savedata\CompleteCircuit.txt) {
 	Clear-Host
 	write-host "`n`t Congradulations. If you check $exportloc, you will find your completed file." -ForegroundColor Green
 	write-host "`n`tNow comes the hard part. You have to copy and paste each command, into discord." -ForegroundColor Yellow
