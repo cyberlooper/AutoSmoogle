@@ -112,7 +112,7 @@ Out-File -FilePath $savedata\CompleteCircuit.txt -InputObject $global:finishedda
 
 if (test-path $savedata\CompleteCircuit.txt) {
 	Clear-Host
-	write-host "`n`t Congradulations. If you check $exportloc, you will find your completed file." -ForegroundColor Green
+	write-host "`n`t Congradulations. If you check $savedata, you will find your completed file." -ForegroundColor Green
 	write-host "`n`tNow comes the hard part. You have to copy and paste each command, into discord." -ForegroundColor Yellow
 	Write-host "`n`tGood Luck, and visit us on the support server if you run into any isues." -ForegroundColor Green
 }
