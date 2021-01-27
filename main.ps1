@@ -14,12 +14,12 @@ All Code provided as is and used at your own risk.
 
 # Inclusions
 $ScriptDirectory = Get-Location
-$ScriptDirectory = "$ScriptDirectory\Functions"
-$functions = Get-ChildItem "$ScriptDirectory"
+$functions = Get-ChildItem "$ScriptDirectory\Functions"
 foreach ($function in $functions) {
-	. (Join-Path $ScriptDirectory "$function")
+	. (Join-Path "$ScriptDirectory\Functions" "$function")
 }
 
+cd $ScriptDirectory
 
 ## Global Variables
 $global:location = Get-Location
@@ -32,9 +32,9 @@ $global:dataloc = ""
 $global:finisheddata = ""
 $global:autoalldone = ""
 $global:linkdone = ""
+$global:exportloc = ""
 ## Start ##
 
-Write-Host "`n`t Welcome to AutoSmoogle, A tool for Translation Circuits." -ForegroundColor Magenta
 Write-Host "`n`n`t This script will guide you through prepping for a translation circuit,"
 Write-Host "`t and provide you with the commands to run to achieve your goal."
 Write-Host "`n`t Please read the screen prompts carefully. You will be provided" -ForegroundColor Yellow
