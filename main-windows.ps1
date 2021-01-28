@@ -88,25 +88,25 @@ function exportcsv {
         New-Item -Path $exportloc -Force -ItemType directory
     }
     $script:exportpath = "$exportloc\$name.csv"
-    $csvout > "$exportpath"
+    $script:csvout > "$exportpath"
 }
 
 
 function createcsv {
     $count = read-host "`n`tHow many channels in the circuit?"
     $counted = 0
-    $csvout = "channel,lang`n"
+    $script:csvout = "channel,lang`n"
     while (!($count -eq $counted)) {
         $counted++
         $channame = read-host "`n`t`[$counted`] Please enter the channel name and language separated by a comma (channel-en,en)"
-        $csvout += "$channame`n"
+        $script:csvout += "$channame`n"
     }
-    $CSVCreated = $true
+    $script:CSVCreated = $true
     Exportcsv
 }
 
 function import ($exportpath) {
-    if (!($exportpath -eq $null)) {
+    if ($exportpath) {
         $script:csvout = import-csv $exportpath
         $script:CSVCreated = $true
     } else {
@@ -137,16 +137,20 @@ function formatting {
 }
 
 function formatted {
+    $script:channelsformatted = $true
     if ($exportpath) {
         import $exportpath
-    } else {
+    }
+    else {
         $provide = Read-Host "`n`tWould you like to provide your own CSV ? [Y/N]"
         switch ($provide) {
-            Y {import}
-            N {createcsv}
-            default {createcsv}
+            Y { import }
+            N {
+                createcsv
+                formatted
+            }
+            default { createcsv }
         }
-        $channelsformatted = $true
     }
 }
 
