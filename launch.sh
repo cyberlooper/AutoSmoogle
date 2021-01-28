@@ -1,0 +1,1 @@
+pwsh ./arch.ps1
