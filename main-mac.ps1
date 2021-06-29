@@ -3,6 +3,7 @@ $host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size(16
 Smoogle Support - Assisted Setup script
 
 v1.0    04th September 2019:    A script is born                               
+V1.1    28th June 2021:         Added MacOS Support
 
 Written By -Z3US- - Smoogle Support
 
